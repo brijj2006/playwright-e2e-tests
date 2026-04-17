@@ -8,3 +8,6 @@ npx playwright show-report
 
 Run playwright in headed mode
 npx playwright test --headed
+
+APP_URL : https://katalon-demo-cura.herokuapp.com/
+npx playwright test tests/demo/mytest.spec.ts --headed

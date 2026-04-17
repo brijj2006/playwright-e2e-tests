@@ -6,7 +6,9 @@
   "author": "bridge automation",
   "type": "commonjs",
   "main": "hello.js",
-  "scripts": {},
+  "scripts": {
+    "demo": "npx playwright test tests/demo/mytest.spec.ts --headed"
+  },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.6.0"
