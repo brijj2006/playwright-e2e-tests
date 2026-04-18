@@ -11,3 +11,6 @@ npx playwright test --headed
 
 APP_URL : https://katalon-demo-cura.herokuapp.com/
 npx playwright test tests/demo/mytest.spec.ts --headed
+
+npx playwright codegen
+npx playwright codegen https://katalon-demo-cura.herokuapp.com/
