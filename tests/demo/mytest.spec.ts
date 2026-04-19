@@ -28,7 +28,7 @@ test.describe("Login feature", () => {
     await expect(page.locator("h2")).toContainText("Make Appointment");
   });
 
-  test.only("locator strategy", async ({ page }) => {
+  test("locator strategy", async ({ page }) => {
     // ✅ `page.getBy*()` and `page.locator()` methods returns the `locator` object
     // ✅ The above methods not to be `awaited`
     // ✅ The type of locator is an `object`
