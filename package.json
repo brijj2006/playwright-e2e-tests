@@ -7,7 +7,8 @@
   "type": "commonjs",
   "main": "hello.js",
   "scripts": {
-    "demo": "npx playwright test tests/demo/mytest.spec.ts --headed"
+    "demo": "npx playwright test tests/demo/mytest.spec.ts --headed",
+    "make-aptmnt": "npx playwright test tests/e2e/makeAptmnt.spec.ts --headed"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
