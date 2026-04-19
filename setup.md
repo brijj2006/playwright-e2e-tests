@@ -14,3 +14,7 @@ npx playwright test tests/demo/mytest.spec.ts --headed
 
 npx playwright codegen
 npx playwright codegen https://katalon-demo-cura.herokuapp.com/
+
+https://sauce-demo.myshopify.com/
+
+saucedemo.com
