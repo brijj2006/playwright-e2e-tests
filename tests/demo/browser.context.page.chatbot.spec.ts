@@ -36,6 +36,8 @@ test.describe("multi context chatbot test suite", () => {
       await expect(customerPage.locator(".agent-message")).toContainText(
         "How can I assist?",
       );
+
+      await browser.close();
     },
   );
 });
