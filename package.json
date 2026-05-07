@@ -4,7 +4,7 @@
   "description": "playwright e2e tests with AI capability",
   "license": "ISC",
   "author": "bridge automation",
-  "type": "commonjs",
+  "type": "module",
   "main": "hello.js",
   "scripts": {
     "demo": "npx playwright test tests/demo/mytest.spec.ts --headed",
