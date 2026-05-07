@@ -1,4 +1,9 @@
 import { test, expect } from "@playwright/test";
+import * as allure from "allure-js-commons";
+
+// await allure.severity("Critical");
+// await allure.feature("CURA Healthcare Service");
+// await allure.story("Make Valid Appointment");
 
 test.describe("Make Appointment", () => {
   test.beforeEach(
@@ -26,23 +31,29 @@ test.describe("Make Appointment", () => {
     "make appointment for non default values",
     { tag: "@demo" },
     async ({ page }) => {
-      await page
-        .locator("#combo_facility")
-        .selectOption("Hongkong CURA Healthcare Center");
-      await page.locator("#chk_hospotal_readmission").click();
+      await allure.step("Fill appointment form", async () => {
+        await page
+          .locator("#combo_facility")
+          .selectOption("Hongkong CURA Healthcare Center");
+        await page.locator("#chk_hospotal_readmission").click();
 
-      await page.locator("#radio_program_medicaid").click();
+        await page.locator("#radio_program_medicaid").click();
 
-      await page.locator("#txt_visit_date").click();
-      await page.locator("#txt_visit_date").fill("01/01/2026");
-      await page.locator("#txt_visit_date").press("Enter");
+        await page.locator("#txt_visit_date").click();
+        await page.locator("#txt_visit_date").fill("01/01/2026");
+        await page.locator("#txt_visit_date").press("Enter");
 
-      await page.locator("#txt_comment").clear();
-      await page.locator("#txt_comment").fill("Book Test Appointment");
+        await page.locator("#txt_comment").clear();
+        await page.locator("#txt_comment").fill("Book Test Appointment");
 
-      await page.getByRole("button", { name: "Book Appointment" }).click();
+        await page.getByRole("button", { name: "Book Appointment" }).click();
+      });
 
-      await expect(page.locator("//h2")).toHaveText("Appointment Confirmation");
+      await allure.step("Verify Appointment Confirmation", async () => {
+        await expect(page.locator("//h2")).toHaveText(
+          "Appointment Confirmation",
+        );
+      });
     },
   );
 });
