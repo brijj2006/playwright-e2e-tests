@@ -1,0 +1,27 @@
+{
+    "articles": [
+        {
+            "slug": "Mocking API test with Bridge",
+            "title": "Mocking API test with Bridge",
+            "description": "Mocking API test with Bridge using Playwright test",
+            "body": "Mocking API test with Bridge using Playwright test",
+            "tagList": [
+                "Playwright",
+                "Bridge",
+                "QA Skills",
+                "Value-Focused"
+            ],
+            "createdAt": "2026-05-08T2117:52:32.682Z",
+            "updatedAt": "2026-05-08T17:52:32.682Z",
+            "favorited": false,
+            "favoritesCount": 1000,
+            "author": {
+                "username": "Brijendra Singh",
+                "bio": null,
+                "image": null,
+                "following": false
+            }
+        }
+    ],
+    "articlesCount": 10
+}
