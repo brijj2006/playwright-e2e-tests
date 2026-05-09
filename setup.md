@@ -18,3 +18,7 @@ npx playwright codegen https://katalon-demo-cura.herokuapp.com/
 https://sauce-demo.myshopify.com/
 
 saucedemo.com
+
+https://www.testmuai.com/selenium-playground/table-search-filter-demo/
+
+https://parabank.parasoft.com/parabank/register.htm
