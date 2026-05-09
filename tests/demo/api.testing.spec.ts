@@ -1,21 +1,45 @@
 import { test, expect } from "@playwright/test";
+import Ajv from "ajv";
 
 const baseUrl = "https://reqres.in/api";
 const apiKey = "test123";
+const schema = {
+  type: "object",
+  properties: {
+    data: {
+      type: "object",
+      properties: {
+        id: { type: "number" },
+        email: { type: "string" },
+        first_name: { type: "string" },
+      },
+      required: ["id", "email"],
+    },
+  },
+};
 
-test(
-  "Test GET request using Playwright",
-  { tag: "@api" },
-  async ({ request }) => {
-    const response = await request.get(`${baseUrl}/users?page=1`, {
-      headers: { "x-api-key": apiKey },
-    });
+test.describe("API Testing using Playwright", () => {
+  test.beforeAll("Setup", async () => {
+    console.log("Test Setup...");
+  });
 
-    expect(response.status()).toBe(200);
-    const responseBody = await response.json();
-    console.log(responseBody);
+  test.afterAll("Teardown", async () => {
+    console.log("Teardown...");
+  });
 
-    /**
+  test(
+    "Test GET request using Playwright",
+    { tag: "@api" },
+    async ({ request }) => {
+      const response = await request.get(`${baseUrl}/users?page=1`, {
+        headers: { "x-api-key": apiKey },
+      });
+
+      expect(response.status()).toBe(200);
+      const responseBody = await response.json();
+      console.log(responseBody);
+
+      /**
      * Sample API Response
      * {
             page: 1,
@@ -41,44 +65,61 @@ test(
         }
      */
 
-    expect(responseBody.page).toBe(1);
-    expect(responseBody.data.length).toBe(6);
-    expect(responseBody.data[0].email).toBe("george.bluth@reqres.in");
+      expect(responseBody.page).toBe(1);
+      expect(responseBody.data.length).toBe(6);
+      expect(responseBody.data[0].email).toBe("george.bluth@reqres.in");
 
-    // Verify partial response (best practice)
-    expect(responseBody.data[0]).toMatchObject({
-      id: 1,
-      first_name: "George",
-    });
+      // Verify partial response (best practice)
+      expect(responseBody.data[0]).toMatchObject({
+        id: 1,
+        first_name: "George",
+      });
 
-    // Loop through response data
-    for (const user of responseBody.data) {
-      expect(user.email).toContain("@");
-      expect(user.id).toBeGreaterThan(0);
-    }
+      // Loop through response data
+      for (const user of responseBody.data) {
+        expect(user.email).toContain("@");
+        expect(user.id).toBeGreaterThan(0);
+      }
 
-    // Validate schema/type
-    expect(typeof responseBody.page).toBe("number");
-  },
-);
+      // Validate schema/type
+      expect(typeof responseBody.page).toBe("number");
+    },
+  );
 
-test(
-  "Test POST request using Playwright",
-  { tag: "@api" },
-  async ({ request }) => {
-    const payload = {
-      name: "Bridge",
-      job: "IT",
-      id: "25",
-      createdAt: "2026-05-09T17:55:49:877Z",
-    };
+  test(
+    "Test POST request using Playwright",
+    { tag: "@api" },
+    async ({ request }) => {
+      const payload = {
+        name: "Bridge",
+        job: "IT",
+        id: "25",
+        createdAt: "2026-05-09T17:55:49:877Z",
+      };
 
-    const response = await request.post(`${baseUrl}/users`, {
-      headers: { "x-api-key": apiKey },
-      data: payload,
-    });
+      const response = await request.post(`${baseUrl}/users`, {
+        headers: { "x-api-key": apiKey },
+        data: payload,
+      });
 
-    expect(response.status()).toBe(201);
-    console.log(await response.json());
-  },
-);
+      expect(response.status()).toBe(201);
+      console.log(await response.json());
+    },
+  );
+
+  test(
+    "JSON schema validation using AJV = Another JSON Validator, npm install ajv",
+    { tag: "@api" },
+    async ({ request }) => {
+      const response = await request.get(`${baseUrl}/users?page=1`, {
+        headers: { "x-api-key": apiKey },
+      });
+      const responseBody = await response.json();
+
+      const ajv = new Ajv();
+      const validate = ajv.compile(schema);
+      const valid = validate(responseBody);
+      expect(valid).toBeTruthy();
+    },
+  );
+});
