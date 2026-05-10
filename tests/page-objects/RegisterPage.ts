@@ -15,25 +15,28 @@ export class RegisterPage {
   readonly passwordInput: Locator;
   readonly repeatedPasswordInput: Locator;
   readonly registerButton: Locator;
+  readonly userAlreadyExistsError: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.firstNameInput = page.locator("#customer.firstName");
-    this.lastNameInput = page.locator("#customer.lastName");
-    this.streetInput = page.locator("#customer.address.street");
-    this.cityInput = page.locator("#customer.address.city");
-    this.stateInput = page.locator("#customer.address.state");
-    this.zipcodeInput = page.locator("#customer.address.zipCode");
-    this.phoneNumberInput = page.locator("#customer.phoneNumber");
-    this.ssnInput = page.locator("#customer.ssn");
-    this.userNameInput = page.locator("#customer.username");
-    this.passwordInput = page.locator("#customer.password");
+    this.firstNameInput = page.locator("#customer\\.firstName");
+    this.lastNameInput = page.locator("#customer\\.lastName");
+    this.streetInput = page.locator("#customer\\.address\\.street");
+    this.cityInput = page.locator("#customer\\.address\\.city");
+    this.stateInput = page.locator("#customer\\.address\\.state");
+    this.zipcodeInput = page.locator("#customer\\.address\\.zipCode");
+    this.phoneNumberInput = page.locator("#customer\\.phoneNumber");
+    this.ssnInput = page.locator("#customer\\.ssn");
+    this.userNameInput = page.locator("#customer\\.username");
+    this.passwordInput = page.locator("#customer\\.password");
     this.repeatedPasswordInput = page.locator("#repeatedPassword");
     this.registerButton = page.getByRole("button", { name: "Register" });
+    this.userAlreadyExistsError = page.locator("#customer\\.username\\.errors");
   }
 
   async goto() {
     await this.page.goto("https://parabank.parasoft.com/parabank/register.htm");
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async fillForm() {
@@ -41,6 +44,7 @@ export class RegisterPage {
     await this.lastNameInput.fill(faker.person.lastName());
     await this.streetInput.fill(faker.location.streetAddress());
     await this.cityInput.fill(faker.location.city());
+    await this.stateInput.fill(faker.location.state());
     await this.zipcodeInput.fill(faker.location.zipCode());
     await this.phoneNumberInput.fill(faker.phone.number());
     await this.ssnInput.fill(faker.string.numeric(9));
@@ -54,5 +58,23 @@ export class RegisterPage {
 
   async submitForm() {
     await this.registerButton.click();
+  }
+
+  async verifyAccountCreation(username: string) {
+    const headerText = await this.page.locator("h1").textContent();
+    const rightPanelText = await this.page.locator("#rightPanel").textContent();
+
+    if (headerText && rightPanelText) {
+      expect(headerText.includes(`Welcome ${username}`)).toBe(true);
+      expect(
+        rightPanelText.includes(
+          `Your account was created successfully. You are now logged in.`,
+        ),
+      ).toBe(true);
+    }
+  }
+
+  async isErrorVisible() {
+    return await this.userAlreadyExistsError.isVisible();
   }
 }
