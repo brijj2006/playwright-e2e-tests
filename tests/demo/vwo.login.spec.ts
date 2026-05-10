@@ -5,6 +5,11 @@ const INVALID_EMAIL = 'invalid.user@test.com';
 const INVALID_PASSWORD = 'WrongPassword123';
 const EXPECTED_ERROR = 'Your email, password, IP address or location did not match';
 
+// prompt for github co-pilot
+// use playwright cli codegen to record a login flow on https://app.vwo.com/, add invalid username , 
+// invalid password and there will be an error, verify the error. 
+// Then refine and generate the test into the produciton ready spec file.
+
 test.describe('VWO Login', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(VWO_LOGIN_URL);
