@@ -21,7 +21,7 @@ test.describe("page object model -> Parabank Test", { tag: "@pom" }, () => {
       }
       await registerPage.verifyAccountCreation(username);
       page.context().storageState({
-        path: "/Users/aadya/Documents/brijendra_home/workspace/lab/playwright-e2e-tests/playwright/.auth/user.json",
+        path: "/playwright-e2e-tests/playwright/.auth/user.json",
       });
       break;
     }
