@@ -22,3 +22,7 @@ saucedemo.com
 https://www.testmuai.com/selenium-playground/table-search-filter-demo/
 
 https://parabank.parasoft.com/parabank/register.htm
+
+
+Playwright CLI
+https://playwright.dev/agent-cli/introduction

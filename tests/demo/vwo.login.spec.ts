@@ -13,7 +13,7 @@ test.describe('VWO Login', () => {
 
   test(
     'should display an error message when invalid credentials are submitted',
-    { tag: '@login' },
+    { tag: '@playwrightCli' },
     async ({ page }) => {
       // Fill in invalid email
       await page.getByRole('textbox', { name: 'Email address' }).fill(INVALID_EMAIL);
@@ -38,7 +38,7 @@ test.describe('VWO Login', () => {
 
   test(
     'should keep login form intact after a failed login attempt',
-    { tag: '@login' },
+    { tag: '@playwrightCli' },
     async ({ page }) => {
       await page.getByRole('textbox', { name: 'Email address' }).fill(INVALID_EMAIL);
       await page.getByRole('textbox', { name: 'Password' }).fill(INVALID_PASSWORD);
